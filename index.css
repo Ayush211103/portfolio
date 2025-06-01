@@ -461,6 +461,45 @@ nav a:hover {
 .contact-form {
     flex: 2;
 }
+#thankyou-message {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #e6ffed;
+  border: 1px solid #b3e6c4;
+  border-radius: 8px;
+  color: #2e7d32;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#thankyou-message p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+#thankyou-message button {
+  padding: 10px 20px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+#thankyou-message button:hover {
+  background-color: #256428;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 .contact-info h3 {
     font-size: 1.5rem;

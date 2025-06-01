@@ -219,27 +219,33 @@
                 </div>
             </div>
             
-            <div class="contact-form">
-                <form>
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" placeholder="Enter your email">
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" placeholder="What is this regarding?">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" placeholder="Tell me about your project..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
+           <div class="contact-form">
+  <form id="form" action="https://formspree.io/f/xdkznrlb" method="POST">
+    <div class="form-group">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Your Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="What is this regarding?" required>
+    </div>
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Send Message</button>
+  </form>
+
+  <div id="thankyou-message" style="display:none; margin-top:20px; color: green;">
+    <p>Thanks! Your message was sent successfully.</p>
+    <button onclick="goBackToHome()">Go Back to Home</button>
+  </div>
+</div>
+
         </div>
     </section>
 
@@ -295,6 +301,49 @@
             document.body.classList.add('dark-mode');
         }
     };
+    const form = document.getElementById('form');
+    const thankyou = document.getElementById('thankyou-message');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();  // Stop form redirect
+
+      const data = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.style.display = 'none';
+          thankyou.style.display = 'block';
+          form.reset();
+
+        //   Optional: auto-redirect after 5 seconds
+          setTimeout(() => {
+            window.location.href = '/';  // Change to your home page path
+          }, 5000);
+          
+        } else {
+          response.json().then(data => {
+            if (data.errors) {
+              alert(data.errors.map(error => error.message).join(", "));
+            } else {
+              alert("Oops! There was a problem submitting your form.");
+            }
+          });
+        }
+      }).catch(error => {
+        alert("Oops! There was a problem submitting your form.");
+      });
+    });
+
+    // 👇 Button click function
+    function goBackToHome() {
+      window.location.href = '/'; // change to your homepage URL if needed
+    }
 </script>
 
 </body>
